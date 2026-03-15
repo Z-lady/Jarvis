@@ -1,0 +1,20 @@
+{
+  "name": "web-search-agent",
+  "version": "1.0.0",
+  "description": "Web Search Agent powered by OpenRouter (free!)",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch ./server.ts",
+    "start": "tsx ./server.ts"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^22.0.0",
+    "tsx": "^4.0.0",
+    "typescript": "^5.0.0"
+  }
+}
