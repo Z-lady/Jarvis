@@ -90,48 +90,42 @@ async function executeTool(
 ): Promise<string> {
   if (name === "web_search") {
     const { query } = args;
-    const url = `https://api.duckduckgo.com/?q=${encodeURIComponent(query)}&format=json&no_html=1&skip_disambig=1`;
 
     try {
-      const res = await fetch(url, {
-        headers: { "User-Agent": "AgentDemo/1.0" },
+      const res = await fetch("https://api.tavily.com/search", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${process.env.TAVILY_API_KEY}`,
+        },
+        body: JSON.stringify({
+          query,
+          search_depth: "basic",
+          max_results: 5,
+          include_answer: true,
+        }),
       });
+
       const data = (await res.json()) as {
-        AbstractText?: string;
-        AbstractURL?: string;
-        Answer?: string;
-        RelatedTopics?: Array<{ Text?: string; FirstURL?: string }>;
+        answer?: string;
+        results?: Array<{ title: string; url: string; content: string }>;
       };
 
       const parts: string[] = [];
-
-      if (data.Answer) {
-        parts.push(`Direct answer: ${data.Answer}`);
-      }
-
-      if (data.AbstractText) {
-        parts.push(`Summary: ${data.AbstractText}`);
-        if (data.AbstractURL) parts.push(`Source: ${data.AbstractURL}`);
-      }
-
-      if (data.RelatedTopics?.length) {
-        parts.push("\nRelated results:");
-        data.RelatedTopics.slice(0, 5).forEach((t) => {
-          if (t.Text) {
-            parts.push(`• ${t.Text}`);
-            if (t.FirstURL) parts.push(`  → ${t.FirstURL}`);
-          }
+      if (data.answer) parts.push(`Summary: ${data.answer}\n`);
+      if (data.results?.length) {
+        parts.push("Sources:");
+        data.results.forEach((r, i) => {
+          parts.push(
+            `\n[${i + 1}] ${r.title}\nURL: ${r.url}\n${r.content.slice(0, 300)}`,
+          );
         });
       }
-
-      return parts.length > 0
-        ? parts.join("\n")
-        : "No results found for that query. Try rephrasing it.";
+      return parts.length > 0 ? parts.join("\n") : "No results found.";
     } catch (err) {
-      return `Search failed: ${err instanceof Error ? err.message : "Unknown error"}. Please answer from your training knowledge.`;
+      return `Search failed: ${err instanceof Error ? err.message : "Unknown"}`;
     }
   }
-
   return `Tool "${name}" is not implemented.`;
 }
 
