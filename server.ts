@@ -69,7 +69,6 @@ app.delete("/api/conversations/:id", (req, res) => {
   res.json({ ok });
 });
 
-
 // ── POST /api/chat ──────────────────────────────────────────
 // Main endpoint — receives message history, streams agent events
 // back to the browser using Server-Sent Events (SSE)
@@ -83,7 +82,7 @@ app.post("/api/chat", async (req, res) => {
 
   const { messages } = req.body as { messages: Message[] };
 
-  // SSE setup — keeps the HTTP connection open 
+  // SSE setup — keeps the HTTP connection open
   // and lets us write multiple events over time
   res.setHeader("Content-Type", "text/event-stream");
   res.setHeader("Cache-Control", "no-cache");
@@ -112,7 +111,9 @@ app.post("/api/chat", async (req, res) => {
 // ── Start ───────────────────────────────────────────────────
 app.listen(PORT, () => {
   const key = process.env.API_KEY ?? "";
-  const keyStatus = key.startsWith("sk-or-") ? "✅ found" : "❌ NOT SET — edit .env first!";
+  const keyStatus = key.startsWith("sk-or-")
+    ? "✅ found"
+    : "❌ NOT SET — edit .env first!";
 
   console.log(`
 ╔═══════════════════════════════════════════╗

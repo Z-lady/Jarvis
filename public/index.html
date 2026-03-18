@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Web Search Agent</title>
+  <title>Multi-Tool Agent</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link
     href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Outfit:wght@400;600;800&display=swap"
@@ -21,11 +21,16 @@
       --orange: #ff8c42;
       --red: #ff4d6a;
       --purple: #a78bfa;
+      --yellow: #ffd166;
       --text: #dce8ff;
       --muted: #3d5070;
       --muted2: #5a7090;
       --mono: 'Fira Code', monospace;
       --sans: 'Outfit', sans-serif;
+      --ts: #00d4ff;
+      --tc: #00ff88;
+      --tu: #a78bfa;
+      --tw: #ffd166;
     }
 
     *,
@@ -33,13 +38,13 @@
     *::after {
       box-sizing: border-box;
       margin: 0;
-      padding: 0;
+      padding: 0
     }
 
     html,
     body {
       height: 100%;
-      overflow: hidden;
+      overflow: hidden
     }
 
     body {
@@ -47,23 +52,19 @@
       color: var(--text);
       font-family: var(--sans);
       display: flex;
-      flex-direction: column;
+      flex-direction: column
     }
 
-    /* grid noise texture */
     body::before {
       content: '';
       position: fixed;
       inset: 0;
-      background-image:
-        linear-gradient(rgba(0, 212, 255, 0.02) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0, 212, 255, 0.02) 1px, transparent 1px);
+      background-image: linear-gradient(rgba(0, 212, 255, .02) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 212, 255, .02) 1px, transparent 1px);
       background-size: 40px 40px;
       pointer-events: none;
-      z-index: 0;
+      z-index: 0
     }
 
-    /* ── HEADER ── */
     header {
       position: relative;
       z-index: 10;
@@ -74,13 +75,13 @@
       height: 54px;
       background: var(--panel);
       border-bottom: 1px solid var(--border);
-      flex-shrink: 0;
+      flex-shrink: 0
     }
 
     .logo {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 10px
     }
 
     .logo-box {
@@ -92,39 +93,66 @@
       align-items: center;
       justify-content: center;
       font-size: 15px;
-      box-shadow: 0 0 14px rgba(0, 212, 255, 0.25), inset 0 0 8px rgba(0, 212, 255, 0.05);
+      box-shadow: 0 0 14px rgba(0, 212, 255, .25)
     }
 
     .logo-name {
       font-family: var(--mono);
       font-size: 12px;
       font-weight: 600;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--text);
+      letter-spacing: .18em;
+      text-transform: uppercase
     }
 
     .logo-name em {
       color: var(--cyan);
-      font-style: normal;
+      font-style: normal
+    }
+
+    .tool-pills {
+      display: flex;
+      gap: 6px;
+      margin-left: 8px
+    }
+
+    .tool-pill {
+      font-family: var(--mono);
+      font-size: 9px;
+      padding: 3px 8px;
+      border-radius: 20px;
+      letter-spacing: .06em;
+      border: 1px solid
+    }
+
+    .ps {
+      color: var(--ts);
+      border-color: var(--ts);
+      background: rgba(0, 212, 255, .06)
+    }
+
+    .pc {
+      color: var(--tc);
+      border-color: var(--tc);
+      background: rgba(0, 255, 136, .06)
+    }
+
+    .pu {
+      color: var(--tu);
+      border-color: var(--tu);
+      background: rgba(167, 139, 250, .06)
+    }
+
+    .pw {
+      color: var(--tw);
+      border-color: var(--tw);
+      background: rgba(255, 209, 102, .06)
     }
 
     .header-right {
       margin-left: auto;
       display: flex;
       align-items: center;
-      gap: 16px;
-    }
-
-    .model-badge {
-      font-family: var(--mono);
-      font-size: 10px;
-      color: var(--muted2);
-      background: var(--card);
-      border: 1px solid var(--border);
-      padding: 4px 10px;
-      border-radius: 20px;
-      letter-spacing: 0.06em;
+      gap: 16px
     }
 
     .status-pill {
@@ -134,7 +162,7 @@
       font-family: var(--mono);
       font-size: 10px;
       color: var(--muted2);
-      letter-spacing: 0.08em;
+      letter-spacing: .08em
     }
 
     .dot {
@@ -143,42 +171,40 @@
       border-radius: 50%;
       background: var(--green);
       box-shadow: 0 0 8px var(--green);
-      animation: breathe 2.5s ease-in-out infinite;
+      animation: breathe 2.5s ease-in-out infinite
     }
 
     .dot.offline {
       background: var(--red);
       box-shadow: 0 0 8px var(--red);
-      animation: none;
+      animation: none
     }
 
     @keyframes breathe {
 
       0%,
       100% {
-        opacity: 1;
+        opacity: 1
       }
 
       50% {
-        opacity: 0.3;
+        opacity: .3
       }
     }
 
-    /* ── MAIN LAYOUT ── */
     .main {
       position: relative;
       z-index: 1;
       flex: 1;
       display: grid;
-      grid-template-columns: 1fr 290px;
-      overflow: hidden;
+      grid-template-columns: 1fr 300px;
+      overflow: hidden
     }
 
-    /* ── CHAT COLUMN ── */
     .chat-col {
       display: flex;
       flex-direction: column;
-      overflow: hidden;
+      overflow: hidden
     }
 
     #messages {
@@ -187,78 +213,88 @@
       padding: 24px 28px;
       display: flex;
       flex-direction: column;
-      gap: 20px;
+      gap: 20px
     }
 
     #messages::-webkit-scrollbar {
-      width: 4px;
-    }
-
-    #messages::-webkit-scrollbar-track {
-      background: transparent;
+      width: 4px
     }
 
     #messages::-webkit-scrollbar-thumb {
       background: var(--border2);
-      border-radius: 2px;
+      border-radius: 2px
     }
 
-    /* ── WELCOME SCREEN ── */
     .welcome {
       margin: auto;
       text-align: center;
-      max-width: 380px;
+      max-width: 400px;
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 14px;
-      animation: fadeUp 0.5s ease;
+      animation: fadeUp .5s ease
     }
 
     .welcome-glyph {
-      font-size: 56px;
-      filter: drop-shadow(0 0 20px rgba(0, 212, 255, 0.4));
+      font-size: 50px;
+      filter: drop-shadow(0 0 18px rgba(0, 212, 255, .4))
     }
 
     .welcome h2 {
       font-size: 22px;
-      font-weight: 800;
-      color: var(--text);
+      font-weight: 800
     }
 
     .welcome p {
       font-size: 13px;
       color: var(--muted2);
-      line-height: 1.7;
+      line-height: 1.7
     }
 
-    .welcome-flow {
-      margin-top: 4px;
-      display: flex;
-      align-items: center;
+    .tool-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
       gap: 8px;
+      width: 100%;
+      margin-top: 4px
+    }
+
+    .tool-badge {
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: 1px solid;
       font-family: var(--mono);
       font-size: 11px;
+      display: flex;
+      align-items: center;
+      gap: 7px
     }
 
-    .flow-step {
-      padding: 5px 12px;
-      border-radius: 20px;
-      border: 1px solid var(--border2);
-      color: var(--muted2);
-      background: var(--card);
+    .tb-s {
+      border-color: rgba(0, 212, 255, .3);
+      color: var(--ts);
+      background: rgba(0, 212, 255, .05)
     }
 
-    .flow-arrow {
-      color: var(--muted);
+    .tb-c {
+      border-color: rgba(0, 255, 136, .3);
+      color: var(--tc);
+      background: rgba(0, 255, 136, .05)
     }
 
-    .flow-step.hl {
-      border-color: var(--cyan);
-      color: var(--cyan);
+    .tb-u {
+      border-color: rgba(167, 139, 250, .3);
+      color: var(--tu);
+      background: rgba(167, 139, 250, .05)
     }
 
-    /* ── KEY WARNING ── */
+    .tb-w {
+      border-color: rgba(255, 209, 102, .3);
+      color: var(--tw);
+      background: rgba(255, 209, 102, .05)
+    }
+
     .key-warning {
       margin: auto;
       text-align: center;
@@ -270,18 +306,18 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 12px;
+      gap: 12px
     }
 
     .key-warning h3 {
       font-size: 18px;
-      color: var(--red);
+      color: var(--red)
     }
 
     .key-warning p {
       font-size: 13px;
       color: var(--muted2);
-      line-height: 1.6;
+      line-height: 1.6
     }
 
     .key-warning code {
@@ -294,92 +330,87 @@
       color: #ff8099;
       display: block;
       text-align: left;
-      width: 100%;
+      width: 100%
     }
 
-    /* ── MESSAGES ── */
     .msg {
       display: flex;
       flex-direction: column;
       gap: 5px;
       max-width: 84%;
-      animation: fadeUp 0.25s ease;
+      animation: fadeUp .25s ease
     }
 
     @keyframes fadeUp {
       from {
         opacity: 0;
-        transform: translateY(10px);
+        transform: translateY(10px)
       }
 
       to {
         opacity: 1;
-        transform: translateY(0);
+        transform: translateY(0)
       }
     }
 
     .msg.user {
-      align-self: flex-end;
+      align-self: flex-end
     }
 
     .msg.agent {
-      align-self: flex-start;
+      align-self: flex-start
     }
 
     .msg-label {
       font-family: var(--mono);
       font-size: 10px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
+      letter-spacing: .12em;
+      text-transform: uppercase
     }
 
     .msg.user .msg-label {
       color: var(--orange);
-      text-align: right;
+      text-align: right
     }
 
     .msg.agent .msg-label {
-      color: var(--cyan);
+      color: var(--cyan)
     }
 
     .msg-bubble {
       padding: 13px 17px;
       border-radius: 12px;
       font-size: 14px;
-      line-height: 1.7;
+      line-height: 1.7
     }
 
     .msg.user .msg-bubble {
       background: #120f1c;
-      border: 1px solid #2a2040;
+      border: 1px solid #2a2040
     }
 
     .msg.agent .msg-bubble {
       background: #0c1520;
-      border: 1px solid #182535;
+      border: 1px solid #182535
     }
 
-    /* ── TOOL CARD ── */
     .tool-wrap {
       align-self: flex-start;
       max-width: 84%;
-      animation: fadeUp 0.25s ease;
+      animation: fadeUp .25s ease
     }
 
     .tool-label {
       font-family: var(--mono);
       font-size: 10px;
-      color: var(--purple);
-      letter-spacing: 0.1em;
+      letter-spacing: .1em;
       text-transform: uppercase;
-      margin-bottom: 5px;
+      margin-bottom: 5px
     }
 
     .tool-card {
-      background: #0d1020;
-      border: 1px solid #1e2540;
       border-radius: 10px;
-      overflow: hidden;
+      overflow: hidden
     }
 
     .tool-card-head {
@@ -387,36 +418,103 @@
       align-items: center;
       gap: 8px;
       padding: 9px 14px;
-      background: #111828;
-      border-bottom: 1px solid #1e2540;
       font-family: var(--mono);
-      font-size: 11px;
-      color: var(--purple);
+      font-size: 11px
     }
 
     .tool-fn {
       margin-left: auto;
       font-size: 10px;
-      color: var(--muted2);
+      opacity: .6
     }
 
     .tool-card-body {
       padding: 10px 14px;
       font-family: var(--mono);
       font-size: 11px;
-      color: #c4b5fd;
-      line-height: 1.6;
+      line-height: 1.6
     }
 
     .tool-result {
       margin-top: 8px;
       padding-top: 8px;
-      border-top: 1px dashed #1e2540;
+      border-top: 1px dashed rgba(255, 255, 255, .08);
       font-size: 10px;
-      color: var(--muted2);
+      opacity: .6
     }
 
-    /* ── THINKING ── */
+    .tc-web_search {
+      background: #091520;
+      border: 1px solid rgba(0, 212, 255, .2)
+    }
+
+    .tc-web_search .tool-card-head {
+      background: #0d1e2a;
+      color: var(--ts)
+    }
+
+    .tc-web_search .tool-card-body {
+      color: #7dd8f8
+    }
+
+    .tl-web_search {
+      color: var(--ts)
+    }
+
+    .tc-calculator {
+      background: #091a10;
+      border: 1px solid rgba(0, 255, 136, .2)
+    }
+
+    .tc-calculator .tool-card-head {
+      background: #0d2215;
+      color: var(--tc)
+    }
+
+    .tc-calculator .tool-card-body {
+      color: #7dffc0
+    }
+
+    .tl-calculator {
+      color: var(--tc)
+    }
+
+    .tc-read_url {
+      background: #110d20;
+      border: 1px solid rgba(167, 139, 250, .2)
+    }
+
+    .tc-read_url .tool-card-head {
+      background: #16102a;
+      color: var(--tu)
+    }
+
+    .tc-read_url .tool-card-body {
+      color: #c4b5fd
+    }
+
+    .tl-read_url {
+      color: var(--tu)
+    }
+
+    .tc-get_weather {
+      background: #1a1608;
+      border: 1px solid rgba(255, 209, 102, .2)
+    }
+
+    .tc-get_weather .tool-card-head {
+      background: #221d0a;
+      color: var(--tw)
+    }
+
+    .tc-get_weather .tool-card-body {
+      color: #ffe88a
+    }
+
+    .tl-get_weather {
+      color: var(--tw)
+    }
+
     .thinking {
       align-self: flex-start;
       display: flex;
@@ -429,7 +527,7 @@
       font-family: var(--mono);
       font-size: 11px;
       color: var(--muted2);
-      animation: fadeUp 0.2s ease;
+      animation: fadeUp .2s ease
     }
 
     .spinner {
@@ -438,17 +536,16 @@
       border: 2px solid var(--border2);
       border-top-color: var(--cyan);
       border-radius: 50%;
-      animation: spin 0.8s linear infinite;
-      flex-shrink: 0;
+      animation: spin .8s linear infinite;
+      flex-shrink: 0
     }
 
     @keyframes spin {
       to {
-        transform: rotate(360deg);
+        transform: rotate(360deg)
       }
     }
 
-    /* ── INPUT BAR ── */
     .input-bar {
       flex-shrink: 0;
       display: flex;
@@ -456,15 +553,14 @@
       gap: 12px;
       padding: 14px 28px;
       border-top: 1px solid var(--border);
-      background: var(--panel);
+      background: var(--panel)
     }
 
     .prompt-arrow {
       font-family: var(--mono);
       font-size: 18px;
       color: var(--cyan);
-      flex-shrink: 0;
-      line-height: 1;
+      flex-shrink: 0
     }
 
     #inputBox {
@@ -476,17 +572,14 @@
       font-family: var(--mono);
       font-size: 13px;
       caret-color: var(--cyan);
-      padding: 4px 0;
+      padding: 4px 0
     }
 
     #inputBox::placeholder {
-      color: var(--muted);
+      color: var(--muted)
     }
 
     #sendBtn {
-      display: flex;
-      align-items: center;
-      gap: 8px;
       background: var(--cyan);
       color: #000;
       border: none;
@@ -495,69 +588,67 @@
       font-family: var(--mono);
       font-size: 11px;
       font-weight: 600;
-      letter-spacing: 0.1em;
+      letter-spacing: .1em;
       text-transform: uppercase;
       cursor: pointer;
-      transition: all 0.15s;
-      flex-shrink: 0;
+      transition: all .15s;
+      flex-shrink: 0
     }
 
     #sendBtn:hover {
       background: #33dfff;
-      transform: translateY(-1px);
+      transform: translateY(-1px)
     }
 
     #sendBtn:active {
-      transform: translateY(0);
+      transform: translateY(0)
     }
 
     #sendBtn:disabled {
       background: var(--muted);
       cursor: not-allowed;
-      transform: none;
+      transform: none
     }
 
-    /* ── SIDEBAR ── */
     .sidebar {
       border-left: 1px solid var(--border);
       background: var(--panel);
       display: flex;
       flex-direction: column;
-      overflow: hidden;
+      overflow: hidden
     }
 
     .sidebar-section {
-      border-bottom: 1px solid var(--border);
+      border-bottom: 1px solid var(--border)
     }
 
     .sidebar-title {
       padding: 12px 16px;
       font-family: var(--mono);
       font-size: 10px;
-      letter-spacing: 0.15em;
+      letter-spacing: .15em;
       text-transform: uppercase;
       color: var(--muted);
       display: flex;
       align-items: center;
-      gap: 7px;
+      gap: 7px
     }
 
-    /* LOG */
     #logList {
-      height: 220px;
+      height: 200px;
       overflow-y: auto;
       padding: 10px 12px;
       display: flex;
       flex-direction: column;
-      gap: 5px;
+      gap: 5px
     }
 
     #logList::-webkit-scrollbar {
-      width: 3px;
+      width: 3px
     }
 
     #logList::-webkit-scrollbar-thumb {
-      background: var(--border2);
+      background: var(--border2)
     }
 
     .log {
@@ -566,78 +657,58 @@
       line-height: 1.5;
       padding: 6px 10px;
       border-radius: 5px;
-      animation: fadeUp 0.15s ease;
+      animation: fadeUp .15s ease
     }
 
     .log.loop {
       background: #0d1020;
       border: 1px solid var(--border);
-      color: var(--muted2);
+      color: var(--muted2)
     }
 
     .log.tool {
       background: #100d20;
       border: 1px solid #2a2040;
-      color: var(--purple);
+      color: var(--purple)
     }
 
     .log.done {
       background: #0a1a12;
       border: 1px solid #1a3a25;
-      color: var(--green);
+      color: var(--green)
     }
 
     .log.err {
       background: #1a0a10;
       border: 1px solid #3a1525;
-      color: var(--red);
+      color: var(--red)
     }
 
     .log .ts {
       color: var(--muted);
-      margin-right: 5px;
+      margin-right: 5px
     }
 
-    /* CONCEPT GUIDE */
-    .concepts {
+    .quick-asks {
       flex: 1;
       overflow-y: auto;
       padding: 12px;
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 5px
     }
 
-    .concept-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 10px 12px;
-    }
-
-    .concept-title {
+    .qa-label {
       font-family: var(--mono);
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: 0.1em;
+      font-size: 9px;
+      letter-spacing: .14em;
       text-transform: uppercase;
-      margin-bottom: 4px;
+      margin: 8px 0 4px;
+      padding-left: 2px
     }
 
-    .concept-desc {
-      font-size: 11px;
-      color: var(--muted2);
-      line-height: 1.55;
-    }
-
-    /* QUICK ASKS */
-    .quick-asks {
-      padding: 12px;
-      border-top: 1px solid var(--border);
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      flex-shrink: 0;
+    .qa-label:first-child {
+      margin-top: 0
     }
 
     .chip {
@@ -650,168 +721,129 @@
       color: var(--muted2);
       cursor: pointer;
       text-align: left;
-      transition: all 0.15s;
+      transition: all .15s;
       width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 7px
     }
 
     .chip:hover {
       border-color: var(--cyan);
       color: var(--cyan);
-      background: rgba(0, 212, 255, 0.05);
+      background: rgba(0, 212, 255, .04)
+    }
+
+    .chip .ci {
+      font-size: 12px;
+      flex-shrink: 0
     }
   </style>
 </head>
 
 <body>
-
-  <!-- HEADER -->
   <header>
     <div class="logo">
       <div class="logo-box">🤖</div>
-      <div class="logo-name"><em>WEB</em> SEARCH AGENT</div>
+      <div class="logo-name"><em>MULTI</em>-TOOL AGENT</div>
+    </div>
+    <div class="tool-pills">
+      <span class="tool-pill ps">🔍 search</span>
+      <span class="tool-pill pc">🧮 calc</span>
+      <span class="tool-pill pu">🌐 url</span>
+      <span class="tool-pill pw">🌤️ weather</span>
     </div>
     <div class="header-right">
-      <span class="model-badge">mistral-7b-instruct:free</span>
-      <div class="status-pill" id="statusPill">
-        <div class="dot" id="statusDot"></div>
-        <span id="statusText">checking...</span>
+      <div class="status-pill">
+        <div class="dot" id="statusDot"></div><span id="statusText">checking...</span>
       </div>
     </div>
   </header>
-
-  <!-- MAIN -->
   <div class="main">
-
-    <!-- CHAT -->
     <div class="chat-col">
-      <div id="messages">
-        <!-- Filled by JS -->
-      </div>
+      <div id="messages"></div>
       <div class="input-bar">
         <span class="prompt-arrow">›</span>
-        <input id="inputBox" type="text" placeholder="Ask the agent anything..." autocomplete="off" />
+        <input id="inputBox" type="text" placeholder="Ask anything — search, math, weather, read a URL..."
+          autocomplete="off" />
         <button id="sendBtn">Run ↵</button>
       </div>
     </div>
-
-    <!-- SIDEBAR -->
     <div class="sidebar">
-
       <div class="sidebar-section">
         <div class="sidebar-title">⚡ Loop Log</div>
         <div id="logList">
-          <div class="log loop"><span class="ts">--:--</span>Waiting for input…</div>
+          <div class="log loop"><span class="ts">--:--</span>Waiting...</div>
         </div>
       </div>
-
-      <div class="sidebar-section" style="flex:1; overflow:hidden; display:flex; flex-direction:column;">
-        <div class="sidebar-title">📖 Key Concepts</div>
-        <div class="concepts">
-          <div class="concept-card">
-            <div class="concept-title" style="color:#00d4ff">Tool Definition</div>
-            <div class="concept-desc">JSON schema that tells the AI what tools exist and when to use them. Lives in
-              <code style="font-family:monospace">agent.ts</code>.</div>
-          </div>
-          <div class="concept-card">
-            <div class="concept-title" style="color:#a78bfa">Tool Execution</div>
-            <div class="concept-desc">Your code that actually <em>runs</em> the tool when the AI requests it. The AI
-              never runs it directly.</div>
-          </div>
-          <div class="concept-card">
-            <div class="concept-title" style="color:#00ff88">Agent Loop</div>
-            <div class="concept-desc">The <code style="font-family:monospace">while</code> loop that keeps asking the AI
-              until <code style="font-family:monospace">finish_reason === "stop"</code>.</div>
-          </div>
-          <div class="concept-card">
-            <div class="concept-title" style="color:#ff8c42">Message History</div>
-            <div class="concept-desc">The array that stores every turn. This IS the agent's memory — send it every call.
-            </div>
-          </div>
+      <div class="sidebar-section" style="flex:1;overflow:hidden;display:flex;flex-direction:column;">
+        <div class="sidebar-title">💡 Try these</div>
+        <div class="quick-asks">
+          <div class="qa-label" style="color:var(--ts)">🔍 Web Search</div>
+          <button class="chip" onclick="prefill('What are the latest AI coding tools in 2025?')"><span
+              class="ci">🔍</span>Latest AI coding tools 2025</button>
+          <button class="chip" onclick="prefill('Who is the current CEO of OpenAI?')"><span class="ci">🔍</span>Current
+            CEO of OpenAI</button>
+          <div class="qa-label" style="color:var(--tc)">🧮 Calculator</div>
+          <button class="chip"
+            onclick="prefill('If I invest $5000 at 8% annual return for 10 years, how much will I have?')"><span
+              class="ci">🧮</span>Investment growth</button>
+          <button class="chip" onclick="prefill('What is 15% tip on a $84.50 bill?')"><span class="ci">🧮</span>Tip
+            calculator</button>
+          <div class="qa-label" style="color:var(--tw)">🌤️ Weather</div>
+          <button class="chip" onclick="prefill('What is the weather like in Tokyo right now?')"><span
+              class="ci">🌤️</span>Weather in Tokyo</button>
+          <button class="chip" onclick="prefill('Should I bring an umbrella in London today?')"><span
+              class="ci">🌤️</span>Weather in London</button>
+          <div class="qa-label" style="color:var(--tu)">🌐 Read URL</div>
+          <button class="chip"
+            onclick="prefill('Read and summarize: https://en.wikipedia.org/wiki/Artificial_intelligence')"><span
+              class="ci">🌐</span>Summarize Wikipedia AI page</button>
+          <button class="chip" onclick="prefill('What does this page say? https://openrouter.ai')"><span
+              class="ci">🌐</span>Read OpenRouter homepage</button>
         </div>
       </div>
-
-      <div class="quick-asks">
-        <div class="sidebar-title" style="padding:0 0 6px; border:none; font-size:9px">⚡ QUICK ASKS</div>
-        <button class="chip" onclick="prefill('What are the best free AI agent frameworks in 2025?')">Best free agent
-          frameworks 2025</button>
-        <button class="chip" onclick="prefill('How does the ReAct agent pattern work?')">ReAct pattern
-          explained</button>
-        <button class="chip" onclick="prefill('What is RAG and why do agents need it?')">What is RAG?</button>
-        <button class="chip" onclick="prefill('LangChain vs LangGraph — what is the difference?')">LangChain vs
-          LangGraph</button>
-      </div>
-
     </div>
   </div>
-
   <script>
-    // ── STATE ─────────────────────────────────────────────────
-    // history = the agent's memory across turns
-    // Each message: { role, content, tool_calls?, tool_call_id? }
-    let history = [];
-    let busy = false;
-
-    const msgEl = document.getElementById('messages');
-    const logEl = document.getElementById('logList');
-    const inputEl = document.getElementById('inputBox');
-    const btnEl = document.getElementById('sendBtn');
-
-    // ── STARTUP CHECK ─────────────────────────────────────────
+    const TOOL_META = {
+      web_search: { icon: '🔍', cls: 'tc-web_search', lc: 'tl-web_search' },
+      calculator: { icon: '🧮', cls: 'tc-calculator', lc: 'tl-calculator' },
+      read_url: { icon: '🌐', cls: 'tc-read_url', lc: 'tl-read_url' },
+      get_weather: { icon: '🌤️', cls: 'tc-get_weather', lc: 'tl-get_weather' }
+    };
+    let history = [], busy = false, activeToolBody = null;
+    const msgEl = document.getElementById('messages'),
+      logEl = document.getElementById('logList'),
+      inputEl = document.getElementById('inputBox'),
+      btnEl = document.getElementById('sendBtn');
     (async () => {
       try {
         const r = await fetch('/api/check');
-        const { ok } = await r.json();
-        const dot = document.getElementById('statusDot');
-        const text = document.getElementById('statusText');
+        const d = await r.json();
+        const dot = document.getElementById('statusDot'),
+          text = document.getElementById('statusText');
+        if (d.ok) {
+          dot.className = 'dot'; text.textContent = 'online'; showWelcome();
 
-        if (ok) {
-          dot.className = 'dot';
-          text.textContent = 'online';
-          showWelcome();
         } else {
-          dot.className = 'dot offline';
-          text.textContent = 'key missing';
-          showKeyWarning();
+          dot.className = 'dot offline'; text.textContent = 'key missing'; showKeyWarning(d);
         }
       } catch {
-        showWelcome(); // server reachable, show welcome anyway
+        showWelcome();
       }
     })();
-
     function showWelcome() {
-      msgEl.innerHTML = `
-    <div class="welcome">
-      <div class="welcome-glyph">🔍</div>
-      <h2>Agent is online.</h2>
-      <p>Ask anything. The agent decides when to search the web, runs the tool, reads the results, and forms an answer — all autonomously.</p>
-      <div class="welcome-flow">
-        <span class="flow-step">question</span>
-        <span class="flow-arrow">→</span>
-        <span class="flow-step hl">tool call?</span>
-        <span class="flow-arrow">→</span>
-        <span class="flow-step">answer</span>
-      </div>
-    </div>`;
+      msgEl.innerHTML = `<div class="welcome"><div class="welcome-glyph">🤖</div><h2>4 tools. 1 agent.</h2><p>The agent picks the right tool automatically — just ask naturally.</p><div class="tool-grid"><div class="tool-badge tb-s">🔍 Web Search</div><div class="tool-badge tb-c">🧮 Calculator</div><div class="tool-badge tb-u">🌐 Read URL</div><div class="tool-badge tb-w">🌤️ Weather</div></div></div>`;
     }
-
-    function showKeyWarning() {
-      msgEl.innerHTML = `
-    <div class="key-warning">
-      <div style="font-size:36px">🔑</div>
-      <h3>API Key Not Set</h3>
-      <p>Open the <strong>.env</strong> file in the project root and paste your key:</p>
-      <code>API_KEY=sk-or-v1-xxxx</code>
-      <p style="font-size:12px">Get a free key at <strong>openrouter.ai/keys</strong> — no credit card needed.</p>
-      <p style="font-size:12px">Then restart the server with <code style="font-family:monospace; background:#0d0508; padding:2px 6px; border-radius:4px">npm run dev</code>.</p>
-    </div>`;
+    function showKeyWarning(d) {
+      const o = d.openrouter ? '✅' : '❌',
+        t = d.tavily ? '✅' : '❌';
+      msgEl.innerHTML = `<div class="key-warning"><div style="font-size:36px">🔑</div><h3>Key Missing</h3><code>${o} API_KEY=sk-or-v1-...<br>${t} TAVILY_API_KEY=tvly-...</code><p style="font-size:12px">Edit .env then restart: npm run dev</p></div>`;
     }
-
-    // ── HELPERS ───────────────────────────────────────────────
     function ts() {
-      const n = new Date();
-      return `${String(n.getHours()).padStart(2, '0')}:${String(n.getSeconds()).padStart(2, '0')}`;
+      const n = new Date(); return `${String(n.getHours()).padStart(2, '0')}:${String(n.getSeconds()).padStart(2, '0')}`;
     }
-
     function log(type, txt) {
       const d = document.createElement('div');
       d.className = `log ${type}`;
@@ -819,65 +851,37 @@
       logEl.appendChild(d);
       logEl.scrollTop = logEl.scrollHeight;
     }
-
-    function clearWelcome() {
-      const w = msgEl.querySelector('.welcome, .key-warning');
-      if (w) w.remove();
-    }
-
+    function clearWelcome() { msgEl.querySelector('.welcome,.key-warning')?.remove(); }
     function addMsg(role, text) {
       clearWelcome();
       const d = document.createElement('div');
       d.className = `msg ${role}`;
-      const formatted = text
-        .replace(/\n/g, '<br>')
-        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-        .replace(/`(.*?)`/g, '<code style="font-family:monospace;background:#111;padding:1px 5px;border-radius:3px">$1</code>');
-      d.innerHTML = `
-    <div class="msg-label">${role === 'user' ? '👤 you' : '🤖 agent'}</div>
-    <div class="msg-bubble">${formatted}</div>`;
+      const html = text.replace(/\n/g, '<br>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/`(.*?)`/g, '<code style="font-family:monospace;background:#111;padding:1px 5px;border-radius:3px">$1</code>'); d.innerHTML = `<div class="msg-label">${role === 'user' ? '👤 you' : '🤖 agent'}</div><div class="msg-bubble">${html}</div>`;
       msgEl.appendChild(d);
       msgEl.scrollTop = msgEl.scrollHeight;
     }
-
     function addThinking(iter) {
       clearWelcome();
       removeThinking();
       const d = document.createElement('div');
       d.className = 'thinking';
       d.id = 'thinking';
-      d.innerHTML = `<div class="spinner"></div> iteration ${iter} — calling AI…`;
+      d.innerHTML = `<div class="spinner"></div> iteration ${iter} — choosing tool…`;
       msgEl.appendChild(d);
       msgEl.scrollTop = msgEl.scrollHeight;
     }
-
-    function removeThinking() {
-      document.getElementById('thinking')?.remove();
-    }
-
-    let activeToolBody = null;
-
+    function removeThinking() { document.getElementById('thinking')?.remove(); }
     function addToolCall(name, query) {
       clearWelcome();
       removeThinking();
+      const m = TOOL_META[name] || { icon: '🔧', cls: '', lc: '' };
       const d = document.createElement('div');
       d.className = 'tool-wrap';
-      d.innerHTML = `
-    <div class="tool-label">🔧 tool call</div>
-    <div class="tool-card">
-      <div class="tool-card-head">
-        ⚡ executing
-        <span class="tool-fn">${name}()</span>
-      </div>
-      <div class="tool-card-body">
-        <span style="color:var(--muted2)">query →</span> "${query}"
-      </div>
-    </div>`;
+      d.innerHTML = `<div class="tool-label ${m.lc}">${m.icon} tool call</div><div class="tool-card ${m.cls}"><div class="tool-card-head"><span>${m.icon}</span>${name}<span class="tool-fn">${name}()</span></div><div class="tool-card-body"><span style="opacity:.5">input →</span> "${query}"</div></div>`;
       msgEl.appendChild(d);
       msgEl.scrollTop = msgEl.scrollHeight;
       activeToolBody = d.querySelector('.tool-card-body');
     }
-
     function addToolResult(preview) {
       if (!activeToolBody) return;
       const r = document.createElement('div');
@@ -886,90 +890,14 @@
       activeToolBody.appendChild(r);
       msgEl.scrollTop = msgEl.scrollHeight;
     }
-
-    // ── SEND ─────────────────────────────────────────────────
     async function send() {
       const text = inputEl.value.trim();
-      if (!text || busy) return;
-
-      busy = true;
-      inputEl.value = '';
-      btnEl.disabled = true;
-      logEl.innerHTML = '';
-      activeToolBody = null;
-
-      addMsg('user', text);
-      history.push({ role: 'user', content: text });
-      log('loop', 'Agent loop started');
-
-      try {
-        const resp = await fetch('/api/chat', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ messages: history }),
-        });
-
-        const reader = resp.body.getReader();
-        const dec = new TextDecoder();
-        let buf = '';
-
-        while (true) {
-          const { done, value } = await reader.read();
-          if (done) break;
-
-          buf += dec.decode(value, { stream: true });
-          const lines = buf.split('\n');
-          buf = lines.pop();
-
-          for (const line of lines) {
-            if (!line.startsWith('data: ')) continue;
-            let ev;
-            try { ev = JSON.parse(line.slice(6)); } catch { continue; }
-
-            if (ev.type === 'thinking') {
-              log('loop', `Iteration ${ev.iteration} → calling AI`);
-              addThinking(ev.iteration);
-            }
-            else if (ev.type === 'tool_call') {
-              log('tool', `🔧 ${ev.name}("${ev.query.slice(0, 40)}")`);
-              addToolCall(ev.name, ev.query);
-            }
-            else if (ev.type === 'tool_result') {
-              log('tool', `↩ result (${ev.preview.length} chars)`);
-              addToolResult(ev.preview);
-            }
-            else if (ev.type === 'answer') {
-              removeThinking();
-              addMsg('agent', ev.text);
-              // Save to history for follow-up questions
-              history.push({ role: 'assistant', content: ev.text });
-              log('done', '✓ Complete');
-            }
-            else if (ev.type === 'error') {
-              removeThinking();
-              addMsg('agent', `⚠️ ${ev.message}`);
-              log('err', ev.message);
-            }
-          }
-        }
-      } catch (err) {
-        removeThinking();
-        addMsg('agent', `⚠️ Network error: ${err.message}`);
-        log('err', err.message);
-      }
-
-      busy = false;
-      btnEl.disabled = false;
-      inputEl.focus();
+      if (!text || busy) return; busy = true; inputEl.value = ''; btnEl.disabled = true; logEl.innerHTML = ''; activeToolBody = null; addMsg('user', text); history.push({ role: 'user', content: text }); log('loop', 'Agent loop started'); try { const resp = await fetch('/api/chat', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ messages: history }) }); const reader = resp.body.getReader(); const dec = new TextDecoder(); let buf = ''; while (true) { const { done, value } = await reader.read(); if (done) break; buf += dec.decode(value, { stream: true }); const lines = buf.split('\n'); buf = lines.pop(); for (const line of lines) { if (!line.startsWith('data: ')) continue; let ev; try { ev = JSON.parse(line.slice(6)); } catch { continue; } if (ev.type === 'thinking') { log('loop', `Iteration ${ev.iteration} → picking tool`); addThinking(ev.iteration); } else if (ev.type === 'tool_call') { const m = TOOL_META[ev.name] || { icon: '🔧' }; log('tool', `${m.icon} ${ev.name}("${ev.query.slice(0, 35)}")`); addToolCall(ev.name, ev.query); } else if (ev.type === 'tool_result') { log('tool', `↩ result (${ev.preview.length} chars)`); addToolResult(ev.preview); } else if (ev.type === 'answer') { removeThinking(); addMsg('agent', ev.text); history.push({ role: 'assistant', content: ev.text }); log('done', '✓ Done'); } else if (ev.type === 'error') { removeThinking(); addMsg('agent', `⚠️ ${ev.message}`); log('err', ev.message); } } } } catch (err) { removeThinking(); addMsg('agent', `⚠️ Network error: ${err.message}`); log('err', err.message); } busy = false; btnEl.disabled = false; inputEl.focus();
     }
-
     function prefill(q) { inputEl.value = q; inputEl.focus(); }
-
-    // ── EVENTS ────────────────────────────────────────────────
     btnEl.addEventListener('click', send);
     inputEl.addEventListener('keydown', e => { if (e.key === 'Enter') send(); });
   </script>
-
 </body>
 
 </html>
